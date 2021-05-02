@@ -4,31 +4,31 @@ require("dotenv").config();
 console.log("District Id in env", process.env.DISTRICT_ID);
 // const DISTRICT_ID = 294; // BBMP
 // const DISTRICT_ID = 170; // Gujarat
-const DISTRICT_ID = 503; // Kota, Rajasthan
+// const DISTRICT_ID = 503; // Kota, Rajasthan
 const availableCenters = [];
 
 const notifyTelegramBot = async (availableCenters = []) => {
   const text = JSON.stringify(availableCenters);
   let textToSend = "";
   if (availableCenters && availableCenters.length > 0) {
-    console.log(
-      "🚀 ~ file: index.js ~ line 14 ~ notifyTelegramBot ~ availableCenters",
-      availableCenters.length
-    );
-
     availableCenters.map((center) => {
       textToSend = textToSend + `Hi, Following centers have a slot:\nName:${center.name}\nPincode:${center.pincode}\nBlock: ${center.blockName}\nDate: ${center.date}\nAvailable Capacity: ${center.available_capacity}\n`;
     });
   }
   const encodedText = encodeURI(textToSend);
-  const teleApiResult = await axios.post(
-    `https://api.telegram.org/bot${process.env.TELE_TOKEN}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${encodedText}`
-  );
+  try {
+    const teleApiResult = await axios.post(
+      `https://api.telegram.org/bot${process.env.TELE_TOKEN}/sendMessage?chat_id=${process.env.CHAT_ID}&text=${encodedText}`
+    );
+  } catch (error) {
+    console.error('The API errored out while notifying the bot')
+  }
+  
 };
 
 const fetchInformation = async (date_start) => {
   const json_result = await axios.get(
-    `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${DISTRICT_ID}&date=${date_start}`
+    `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${process.env.DISTRICT_ID}&date=${date_start}`
   );
   const {
     data: { centers = [] },
