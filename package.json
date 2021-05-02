@@ -1,0 +1,16 @@
+{
+  "name": "cowin-app-scrapper",
+  "version": "1.0.0",
+  "description": "Keeps pinging and then notifies",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vinay Gopalaiah",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "moment": "^2.29.1",
+    "momentjs": "^2.0.0"
+  }
+}
