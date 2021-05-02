@@ -1,6 +1,6 @@
 const axios = require("axios").default;
 const moment = require("moment");
-require("dotenv").config();
+require("dotenv").config({ path: __dirname + "/.env" });
 console.log("District Id in env", process.env.DISTRICT_ID);
 // const DISTRICT_ID = 294; // BBMP
 // const DISTRICT_ID = 170; // Gujarat
